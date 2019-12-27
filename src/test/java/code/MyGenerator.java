@@ -26,8 +26,9 @@ public class MyGenerator {
     public static final String DATABASE = "doctor";
     // 类信息：类名、对象名（一般是【类名】的首字母小些）、类说明、时间
     public static final String CLASSNAME = "ProductInfo";
-    public static final String TABLE = "t_product_info";//表名
-    public static final String REMOVE_PRE_TABLE= "product_info"; //忽略前缀的表名
+    public static final String TABLE = "t_product_info,t_product_pic";//表名,可多个用","分割
+   // public static final String REMOVE_PRE_TABLE= "product_info"; //忽略前缀的表名
+    public static final String TABLE_PRE= "t_"; //表名前缀
     public static final String CLASSCOMMENT = "月度报表记录";
     public static final String TIME = "2019年12月27日";
     public static final String AGILE = new Date().getTime() + "";
@@ -40,37 +41,41 @@ public class MyGenerator {
     public static final String CONTROLLER_URL = "com.doctor.controller";
     //是否是Swagger配置
     public static final String IS_SWAGGER = "true";
-
+    // 生成文件存放位置
+    public static final String FILE_URL = "E:/generator/code/";
 
     public static void main(String[] args) {
         BasisInfo bi = new BasisInfo(PROJECT, AUTHOR, VERSION, URL, NAME, PASS, DATABASE, TIME, AGILE, ENTITY_URL,
                 DAO_URL, XML_URL, SERVICE_URL, SERVICE_IMPL_URL, CONTROLLER_URL,IS_SWAGGER);
-        bi.setTable(TABLE);
-        bi.setEntityName(MySqlToJavaUtil.getClassName(REMOVE_PRE_TABLE));
-        // bi.setEntityName(CLASSNAME);
-        bi.setObjectName(MySqlToJavaUtil.changeToJavaFiled(REMOVE_PRE_TABLE));
-        bi.setEntityComment(CLASSCOMMENT);
-        try {
-            bi = EntityInfoUtil.getInfo(bi);
+         String[] tables = TABLE.split(",");
+        for (String table : tables) {
+            bi.setTable(table);
+            String removePreTable = table.substring(table.indexOf(TABLE_PRE)+TABLE_PRE.length());
+            bi.setEntityName(MySqlToJavaUtil.getClassName(removePreTable));
+            // bi.setEntityName(CLASSNAME);
+            bi.setObjectName(MySqlToJavaUtil.changeToJavaFiled(removePreTable));
+            bi.setEntityComment(CLASSCOMMENT);
+            try {
+                bi = EntityInfoUtil.getInfo(bi);
+                //开始生成文件
+                String aa1 = Generator.createEntity(FILE_URL, bi).toString();
+                String aa2 = Generator.createDao(FILE_URL, bi).toString();
+                String aa3 = Generator.createDaoImpl(FILE_URL, bi).toString();
+                String aa4 = Generator.createService(FILE_URL, bi).toString();
+                String aa5 = Generator.createServiceImpl(FILE_URL, bi).toString();
+                String aa6 = Generator.createController(FILE_URL, bi).toString();
+                // 是否创建swagger配置文件
+                String aa7 = Generator.createSwaggerConfig(FILE_URL, bi).toString();
 
-            String fileUrl = "E:/generator/code/";// 生成文件存放位置
-            //开始生成文件
-            String aa1 = Generator.createEntity(fileUrl, bi).toString();
-            String aa2 = Generator.createDao(fileUrl, bi).toString();
-            String aa3 = Generator.createDaoImpl(fileUrl, bi).toString();
-            String aa4 = Generator.createService(fileUrl, bi).toString();
-            String aa5 = Generator.createServiceImpl(fileUrl, bi).toString();
-            String aa6 = Generator.createController(fileUrl, bi).toString();
-            // 是否创建swagger配置文件
-            String aa7 = Generator.createSwaggerConfig(fileUrl, bi).toString();
+                System.out.println(aa1);
+                System.out.println(aa2); System.out.println(aa3); System.out.println(aa4);
+                System.out.println(aa5); System.out.println(aa6); System.out.println(aa7);
 
-            System.out.println(aa1);
-            System.out.println(aa2); System.out.println(aa3); System.out.println(aa4);
-            System.out.println(aa5); System.out.println(aa6); System.out.println(aa7);
-
-            //System.out.println(aa7);
-        } catch (SQLException e) {
-            e.printStackTrace();
+                //System.out.println(aa7);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 }
