@@ -48,9 +48,6 @@ public class ${entityName}  {
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
   </#if>
  </#if>
- <#if ci.property=="id">
-	@TableId(value = "id", type = IdType.AUTO)
- </#if>
  <#if isSwagger=="true" >
 	@ApiModelProperty(name = "${ci.property}" , value = "${ci.comment}")
  </#if>

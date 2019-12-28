@@ -41,7 +41,9 @@ public class EntityInfoUtil {
 				if (jdbcType.equalsIgnoreCase("int")) {
 					ci.setJdbcType("Integer");
 				}else if (jdbcType.equalsIgnoreCase("datetime")) {
-					ci.setJdbcType("timestamp");
+					ci.setJdbcType("TIMESTAMP");
+				}else if (jdbcType.toLowerCase().contains("text")) {
+					ci.setJdbcType("LONGVARCHAR");
 				}else {
 					ci.setJdbcType(jdbcType);
 				}

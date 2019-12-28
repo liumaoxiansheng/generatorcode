@@ -28,7 +28,7 @@
             deleted=0
 			 <#list cis as ci>
 			 <if test="${ci.property} != null">
-                 and ${ci.column} = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType}}
+                 and ${ci.column} = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}}
              </if>
 			 </#list>
         </where>
@@ -47,7 +47,7 @@
         <set>
 			<#list cis as ci>
 			 <if test="${ci.property} != null">
-				 ${ci.column} = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType}},
+				 ${ci.column} = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}},
              </if>
 			</#list>
         </set>
@@ -85,7 +85,7 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <#list cis as ci>
 			 <if test="${ci.property} != null">
-				 <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType}},
+				 <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}},
              </if>
 			</#list>
         </trim>
@@ -104,7 +104,7 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <#list cis as ci>
 			 <if test="${ci.property} != null">
-				 <#noparse>#{</#noparse>item.${ci.property},jdbcType=${ci.jdbcType}},
+				 <#noparse>#{</#noparse>item.${ci.property},jdbcType=${ci.jdbcType?upper_case}},
              </if>
 			</#list>
         </trim>
@@ -129,7 +129,7 @@
             deleted=0
 			 <#list cis as ci>
 			 <if test="${ci.property} != null">
-				and ${ci.column} = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType}}
+				and ${ci.column} = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}}
              </if>
 			 </#list>
 		</where>
