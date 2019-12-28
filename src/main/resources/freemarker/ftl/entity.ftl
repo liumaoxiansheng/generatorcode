@@ -5,9 +5,6 @@
  * All right reserved. 
  */
 package ${entityUrl};
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 <#if isSwagger=="true" >
 import io.swagger.annotations.ApiModelProperty;
@@ -34,7 +31,7 @@ import ${ps};
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class ${entityName} extends Model<${entityName}> {
+public class ${entityName}  {
 
 	private static final long serialVersionUID = ${agile}L;
 	
@@ -61,9 +58,5 @@ public class ${entityName} extends Model<${entityName}> {
     
 </#list>
 
-	@Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
 }
 	

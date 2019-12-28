@@ -9,7 +9,6 @@ package ${daoUrl};
 import ${entityUrl}.${entityName};
 import org.dr.das.model.operator.SystemSelect;
 import java.util.List;
-import java.Lang.Long;
 import org.apache.ibatis.annotations.Param;
 /**   
  * <p>自动生成工具：他强由他强，明月照大江</p>

@@ -6,7 +6,6 @@
  */
 package ${controllerUrl};
 import lombok.extern.slf4j.Slf4j;
-import ${abstractControllerUrl}.AbstractController;
 import ${entityUrl}.${entityName};
 import ${serviceUrl}.${entityName}Service;
 import javax.servlet.http.HttpServletRequest;
@@ -21,8 +20,6 @@ import java.util.List;
 <#if isSwagger=="true" >
 import io.swagger.annotations.Api;
 </#if>
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 /**   
  * <p>自动生成工具：他强由他强，明月照大江</p>
  * 
@@ -69,7 +66,7 @@ int rows=${entityName?lower_case}Service.update(${entityName?lower_case});
     //根据id删除
     @GetMapping(value="/deleteById")
     public ResVal delete(HttpServletRequest request,@RequestBody SystemSelect systemSelect) {
-int rows=${entityName?lower_case}Service.deleteById(id);
+int rows=${entityName?lower_case}Service.deleteById(systemSelect.getId());
         if (rows <= 0) {
             return ResVal.error();
         }
@@ -78,7 +75,7 @@ int rows=${entityName?lower_case}Service.deleteById(id);
 
     //根据id查询
     @GetMapping(value="/getById")
-    public ResVal getById(HttpServletRequest request,@RequestBody SystemSelect systemSelect) throws CommonException {
+    public ResVal getById(HttpServletRequest request,@RequestBody SystemSelect systemSelect)  {
 ${entityName} ${entityName?lower_case} = ${entityName?lower_case}Service.findById(systemSelect.getId());
 ResVal resVal = new ResVal<>();
 resVal.setData(${entityName?lower_case});
