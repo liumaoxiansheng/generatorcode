@@ -19,7 +19,7 @@
         where id = <#noparse>#{id,jdbcType=BIGINT}</#noparse>
     </select>
     <!-- 实体条件查询返回最新的一条数据 -->
-    <select id="findByEntity"parameterType="${entityUrl}.${entityName}"
+    <select id="findByEntity" parameterType="${entityUrl}.${entityName}"
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
