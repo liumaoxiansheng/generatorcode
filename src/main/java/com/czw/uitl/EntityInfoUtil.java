@@ -37,7 +37,7 @@ public class EntityInfoUtil {
 				String jdbcType = rs.getString(2);
 				String comment = rs.getString(3);
 				PropertyInfo ci=new PropertyInfo();
-				ci.setColumn(column);
+				ci.setColumn(column.toUpperCase());
 				if (jdbcType.equalsIgnoreCase("int")) {
 					ci.setJdbcType("Integer");
 				}else if (jdbcType.equalsIgnoreCase("datetime")) {
