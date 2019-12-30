@@ -23,13 +23,19 @@ public class MySqlTypeConvert  implements ITypeConvert {
             return DbColumnType.LONG;
         } else if (t.contains("tinyint")) {
             return DbColumnType.BYTE;
+        } else if (t.contains("smallint")) {
+            return DbColumnType.SHORT;
         } else if (t.contains("int")) {
             return DbColumnType.INTEGER;
         } else if (t.contains("text")) {
             return DbColumnType.STRING;
         } else if (t.contains("bit")) {
             return DbColumnType.BOOLEAN;
+        } else if (t.contains("boolean")) {
+            return DbColumnType.BOOLEAN;
         } else if (t.contains("decimal")) {
+            return DbColumnType.BIG_DECIMAL;
+        } else if (t.contains("numeric")) {
             return DbColumnType.BIG_DECIMAL;
         } else if (t.contains("clob")) {
             return DbColumnType.CLOB;
@@ -38,6 +44,8 @@ public class MySqlTypeConvert  implements ITypeConvert {
         } else if (t.contains("binary")) {
             return DbColumnType.BYTE_ARRAY;
         } else if (t.contains("float")) {
+            return DbColumnType.FLOAT;
+        } else if (t.equals("real")) {
             return DbColumnType.FLOAT;
         } else if (t.contains("double")) {
             return DbColumnType.DOUBLE;

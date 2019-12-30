@@ -39,7 +39,7 @@ public class EntityInfoUtil {
 				PropertyInfo ci=new PropertyInfo();
 				ci.setColumn(column);
 				if (jdbcType.equalsIgnoreCase("int")) {
-					ci.setJdbcType("Integer");
+					ci.setJdbcType("INTEGER");
 				}else if (jdbcType.equalsIgnoreCase("datetime")) {
 					ci.setJdbcType("TIMESTAMP");
 				}else if (jdbcType.toLowerCase().contains("text")) {
