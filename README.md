@@ -2,6 +2,18 @@
 自定义代码生成器，模板针对mabatis
 zb一下实现思路：
   核心思想：元数据+freemarker生成
+  比如：
+  
+  
+    select column_name,data_type,column_comment,column_key from information_schema.columns where
+  				 table_schema='数据库名' and table_name='表名';
+  				 
+  可查到该表的列名称、字段类型、备注、主键等信息。
+  				 
+    select table_name,table_comment  from information_schema.tables where
+                 				 table_schema='数据库名' and table_name='表名';
+    
+  可查到该表名称备注等信息；
   借助Freemarker机制可以方便的根据模板生成文件，同时也是组成代码生成器的核心部分。对于Freemarker而
  言，其强调 数据模型 + 模板 = 文件 的思想，所以代码生成器最重要的一个部分之一就是数据模型。在这里数据
  模型共有两种形式组成

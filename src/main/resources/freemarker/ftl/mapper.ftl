@@ -16,7 +16,7 @@
         select
         <include refid="Base_Column_List"/>
         from ${table}
-        where id = <#noparse>#{id,jdbcType=BIGINT}</#noparse>
+        where ${idColumn} = <#noparse>#{</#noparse>${idJavaType},jdbcType=${idJdbcType}}
     </select>
     <!-- 实体条件查询返回最新的一条数据 -->
     <select id="findByEntity" parameterType="${entityUrl}.${entityName}"
@@ -32,14 +32,14 @@
              </if>
 			 </#list>
         </where>
-		order by id desc
+		order by ${idColumn} desc
 		limit 1
     </select>
 
     <!-- 逻辑删除 -->
     <update id="deleteById" parameterType="java.lang.Long">
         update ${table} set deleted = 1
-		where id = <#noparse>#{id,jdbcType=BIGINT}</#noparse>
+		where ${idColumn} = <#noparse>#{</#noparse>${idJavaType},jdbcType=${idJdbcType}}
     </update>
     <!-- 修改-->
     <update id="updateById" parameterType="${entityUrl}.${entityName}">
@@ -51,7 +51,7 @@
              </if>
 			</#list>
         </set>
-		where id = <#noparse>#{id,jdbcType=BIGINT}</#noparse>
+		where ${idColumn} = <#noparse>#{</#noparse>${idJavaType},jdbcType=${idJdbcType}}
     </update>
     <!-- 批量修改-->
     <update id="updateBatch" parameterType="${entityUrl}.${entityName}">
@@ -59,17 +59,17 @@
         <set>
 			<#list cis as ci>
 			 <if test="${ci.property} != null">
-				 ${ci.column} = case id
+				 ${ci.column} = case ${idColumn}
 				 <foreach collection="list" item="item" index="index" separator=",">
-                     WHEN <#noparse>#{</#noparse>item.id} THEN <#noparse>#{</#noparse>item.${ci.property}}
+                     WHEN <#noparse>#{</#noparse>item.${idJavaType}} THEN <#noparse>#{</#noparse>item.${ci.property}}
 				 </foreach>
 				 end,
              </if>
 			</#list>
         </set>
-		where id in
+		where ${idColumn} in
         <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
-		<#noparse>#{</#noparse>item.id}
+		<#noparse>#{</#noparse>item.${idJavaType}}
         </foreach>
     </update>
     <!-- 插入-->

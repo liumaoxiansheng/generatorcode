@@ -25,11 +25,8 @@ public class MyGenerator {
     public static final String PASS = "123456";
     public static final String DATABASE = "doctor";
     // 类信息：类名、对象名（一般是【类名】的首字母小些）、类说明、时间
-    public static final String CLASSNAME = "ProductInfo";
-    public static final String TABLE = "t_product_info,t_product_pic";//表名,可多个用","分割
-   // public static final String REMOVE_PRE_TABLE= "product_info"; //忽略前缀的表名
+    public static final String TABLE = "t_health_file,t_product_cart";//表名,可多个用","分割
     public static final String TABLE_PRE= "t_"; //表名前缀
-    public static final String CLASSCOMMENT = "月度报表记录";
     public static final String TIME = "2019年12月27日";
     public static final String AGILE = new Date().getTime() + "";
     // 路径信息，分开路径方便聚合工程项目，微服务项目
@@ -45,16 +42,15 @@ public class MyGenerator {
     public static final String FILE_URL = "E:/generator/code/";
 
     public static void main(String[] args) {
-        BasisInfo bi = new BasisInfo(PROJECT, AUTHOR, VERSION, URL, NAME, PASS, DATABASE, TIME, AGILE, ENTITY_URL,
-                DAO_URL, XML_URL, SERVICE_URL, SERVICE_IMPL_URL, CONTROLLER_URL,IS_SWAGGER);
+
          String[] tables = TABLE.split(",");
         for (String table : tables) {
+            BasisInfo bi = new BasisInfo(PROJECT, AUTHOR, VERSION, URL, NAME, PASS, DATABASE, TIME, AGILE, ENTITY_URL,
+                    DAO_URL, XML_URL, SERVICE_URL, SERVICE_IMPL_URL, CONTROLLER_URL,IS_SWAGGER);
             bi.setTable(table);
             String removePreTable = table.substring(table.indexOf(TABLE_PRE)+TABLE_PRE.length());
             bi.setEntityName(MySqlToJavaUtil.getClassName(removePreTable));
-            // bi.setEntityName(CLASSNAME);
             bi.setObjectName(MySqlToJavaUtil.changeToJavaFiled(removePreTable));
-            bi.setEntityComment(CLASSCOMMENT);
             try {
                 bi = EntityInfoUtil.getInfo(bi);
                 //开始生成文件
@@ -65,11 +61,11 @@ public class MyGenerator {
                 String aa5 = Generator.createServiceImpl(FILE_URL, bi).toString();
                 String aa6 = Generator.createController(FILE_URL, bi).toString();
                 // 是否创建swagger配置文件
-                String aa7 = Generator.createSwaggerConfig(FILE_URL, bi).toString();
+               // String aa7 = Generator.createSwaggerConfig(FILE_URL, bi).toString();
 
                 System.out.println(aa1);
                 System.out.println(aa2); System.out.println(aa3); System.out.println(aa4);
-                System.out.println(aa5); System.out.println(aa6); System.out.println(aa7);
+               // System.out.println(aa5); System.out.println(aa6); System.out.println(aa7);
 
                 //System.out.println(aa7);
             } catch (SQLException e) {

@@ -43,7 +43,7 @@ public class ${entityName}Controller extends BaseController{
     private ListUtil listUtil;
    //保存
     @PostMapping(value="/save")
-    public ResVal save(@RequestBody ${entityName} ${entityName?lower_case})  {
+    public ResVal save(HttpServletRequest request, @RequestBody ${entityName} ${entityName?lower_case})  {
         //业务操作
     int rows=${entityName?lower_case}Service.add(${entityName?lower_case});
     if (rows <= 0) {

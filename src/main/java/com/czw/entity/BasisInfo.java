@@ -27,29 +27,29 @@ import java.util.Set;
 public class BasisInfo implements Serializable{
 	private static final long serialVersionUID = 123123L;
 
-	private String project;
+	private String project;//项目名称
 	
-	private String author;
+	private String author;//作者
 	
-	private String version;
+	private String version;//版本号
 	
-	private String dbUrl;
+	private String dbUrl;//数据库
 	
-	private String dbName;
+	private String dbName;//用户名
 	
-	private String dbPassword;
+	private String dbPassword;//密码
 	
-	private String database;
+	private String database;//数据库名
 	
-	private String table;
+	private String table;//表明
 	
-	private String entityName;
+	private String entityName;//实体模型名称
 	
-	private String objectName;
+	private String objectName;//
 	
-	private String entityComment;
+	private String entityComment;//实体模型备注
 	
-	private String createTime;
+	private String createTime;//创建时间
 	
 	private String agile;
 	
@@ -68,8 +68,10 @@ public class BasisInfo implements Serializable{
 	private String controllerUrl;
 	
 	private String swaggerConfigUrl;
-	
-	private String idType;
+	private String idColumn;//主键列
+	private String idJavaType;//主键的javatype
+
+	private String idType;//
 	
 	private String idJdbcType;
 	

@@ -25,13 +25,15 @@ public class PropertyInfo implements Serializable{
 	
 	private static final long serialVersionUID = 123124L;
 	
-	private String column;
+	private String column;//列名
 
-	private String jdbcType;
+	private String jdbcType;//mybatis对应的jabcType
 	 
-	private String comment;
+	private String comment;//列的备注
 	 
-	private String property;
+	private String property;//实体类对应的属性名
 	 
-	private String javaType;
+	private String javaType;//对应的java类型
+
+	private String isPrimaryKey="false";//是否主键
 }
