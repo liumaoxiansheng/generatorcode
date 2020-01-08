@@ -25,26 +25,26 @@ import com.github.pagehelper.PageHelper;
 @Service
 public class ${entityName}ServiceImpl  implements ${entityName}Service  {
     @Autowired
-    private ${entityName}Dao ${entityName?lower_case}Dao;
+    private ${entityName}Dao ${entityName?uncap_first}Dao;
     @Override
-	public int add(${entityName} ${entityName?lower_case}){
-return ${entityName?lower_case}Dao.insert(${entityName?lower_case});
+	public int add(${entityName} ${entityName?uncap_first}){
+return ${entityName?uncap_first}Dao.insert(${entityName?uncap_first});
     }
     @Override
-    public int update(${entityName} ${entityName?lower_case}){
-return ${entityName?lower_case}Dao.updateById(${entityName?lower_case});
+    public int update(${entityName} ${entityName?uncap_first}){
+return ${entityName?uncap_first}Dao.updateById(${entityName?uncap_first});
 }
     @Override
     public int deleteById(Long id){
-return ${entityName?lower_case}Dao.deleteById(id);
+return ${entityName?uncap_first}Dao.deleteById(id);
 }
     @Override
    public ${entityName} findById(Long id){
-return ${entityName?lower_case}Dao.findById(id);
+return ${entityName?uncap_first}Dao.findById(id);
 }
     @Override
    public  List<${entityName}> selectPage(SystemSelect systemSelect){
 PageHelper.startPage(systemSelect.getPageNum(), systemSelect.getPageSize());
-return ${entityName?lower_case}Dao.selectPage(systemSelect);
+return ${entityName?uncap_first}Dao.selectPage(systemSelect);
 }
 }

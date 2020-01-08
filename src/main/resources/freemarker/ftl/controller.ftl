@@ -38,14 +38,14 @@ import io.swagger.annotations.Api;
 public class ${entityName}Controller extends BaseController{
 
 	@Autowired
-    private ${entityName}Service ${entityName?lower_case}Service;
+    private ${entityName}Service ${entityName?uncap_first}Service;
  @Autowired
     private ListUtil listUtil;
    //保存
     @PostMapping(value="/save")
-    public ResVal save(HttpServletRequest request, @RequestBody ${entityName} ${entityName?lower_case})  {
+    public ResVal save(HttpServletRequest request, @RequestBody ${entityName} ${entityName?uncap_first})  {
         //业务操作
-    int rows=${entityName?lower_case}Service.add(${entityName?lower_case});
+    int rows=${entityName?uncap_first}Service.add(${entityName?uncap_first});
     if (rows <= 0) {
             return ResVal.error();
         }
@@ -56,7 +56,7 @@ public class ${entityName}Controller extends BaseController{
     @PostMapping(value = "/update")
     public ResVal update(HttpServletRequest request, @RequestBody ${entityName} ${entityName?lower_case} ) {
         //业务操作
-int rows=${entityName?lower_case}Service.update(${entityName?lower_case});
+int rows=${entityName?uncap_first}Service.update(${entityName?uncap_first});
         if (rows <= 0) {
             return ResVal.error();
         }
@@ -66,7 +66,7 @@ int rows=${entityName?lower_case}Service.update(${entityName?lower_case});
     //根据id删除
     @GetMapping(value="/deleteById")
     public ResVal delete(HttpServletRequest request,@RequestBody SystemSelect systemSelect) {
-int rows=${entityName?lower_case}Service.deleteById(systemSelect.getId());
+int rows=${entityName?uncap_first}Service.deleteById(systemSelect.getId());
         if (rows <= 0) {
             return ResVal.error();
         }
@@ -76,9 +76,9 @@ int rows=${entityName?lower_case}Service.deleteById(systemSelect.getId());
     //根据id查询
     @GetMapping(value="/getById")
     public ResVal getById(HttpServletRequest request,@RequestBody SystemSelect systemSelect)  {
-${entityName} ${entityName?lower_case} = ${entityName?lower_case}Service.findById(systemSelect.getId());
+${entityName} ${entityName?uncap_first} = ${entityName?uncap_first}Service.findById(systemSelect.getId());
 ResVal resVal = new ResVal<>();
-resVal.setData(${entityName?lower_case});
+resVal.setData(${entityName?uncap_first});
         return resVal;
     }
 
@@ -86,7 +86,7 @@ resVal.setData(${entityName?lower_case});
     @GetMapping(value="/selectPage")
     public ResVal selectPage(HttpServletRequest request,@RequestBody SystemSelect systemSelect) {
         ResVal resVal = new ResVal<>();
-        List<${entityName}> list = ${entityName?lower_case}Service.selectPage(systemSelect);
+        List<${entityName}> list = ${entityName?uncap_first}Service.selectPage(systemSelect);
         resVal.setArray(list);
         return listUtil.setDateAndArray(resVal);
     }
