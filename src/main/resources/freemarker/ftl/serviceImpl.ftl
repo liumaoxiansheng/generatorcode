@@ -1,7 +1,7 @@
 /**
  * @filename:${entityName}ServiceImpl ${createTime}
  * @project ${project}  ${version}
- * Copyright(c) 2018 ${author} Co. Ltd. 
+ * Copyright(c) ${createTime} ${author} Co. Ltd.
  * All right reserved. 
  */
 package ${serviceImplUrl};

@@ -1,7 +1,7 @@
 /**
  * @filename:${entityName}Controller ${createTime}
  * @project ${project}  ${version}
- * Copyright(c) 2020 ${author} Co. Ltd. 
+ * Copyright(c) ${createTime} ${author} Co. Ltd.
  * All right reserved. 
  */
 package ${controllerUrl};
@@ -23,7 +23,7 @@ import io.swagger.annotations.Api;
 /**   
  * <p>自动生成工具：他强由他强，明月照大江</p>
  * 
- * <p>说明： ${entityComment}API接口空置层</P>
+ * <p>说明： ${entityComment}API接口控制层</P>
  * @version: ${version}
  * @author: ${author}
  * @time    ${createTime}
