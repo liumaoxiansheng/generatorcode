@@ -28,23 +28,23 @@ public class ${entityName}ServiceImpl  implements ${entityName}Service  {
     private ${entityName}Dao ${entityName?uncap_first}Dao;
     @Override
 	public int add(${entityName} ${entityName?uncap_first}){
-return ${entityName?uncap_first}Dao.insert(${entityName?uncap_first});
+        return ${entityName?uncap_first}Dao.insert(${entityName?uncap_first});
     }
     @Override
     public int update(${entityName} ${entityName?uncap_first}){
-return ${entityName?uncap_first}Dao.updateById(${entityName?uncap_first});
-}
+        return ${entityName?uncap_first}Dao.updateById(${entityName?uncap_first});
+    }
     @Override
     public int deleteById(Long id){
-return ${entityName?uncap_first}Dao.deleteById(id);
-}
+        return ${entityName?uncap_first}Dao.deleteById(id);
+    }
     @Override
-   public ${entityName} findById(Long id){
-return ${entityName?uncap_first}Dao.findById(id);
-}
+    public ${entityName} findById(Long id){
+        return ${entityName?uncap_first}Dao.findById(id);
+    }
     @Override
-   public  List<${entityName}> selectPage(SystemSelect systemSelect){
-PageHelper.startPage(systemSelect.getPageNum(), systemSelect.getPageSize());
-return ${entityName?uncap_first}Dao.selectPage(systemSelect);
-}
+    public  List<${entityName}> selectPage(SystemSelect systemSelect){
+        PageHelper.startPage(systemSelect.getPageNum(), systemSelect.getPageSize());
+        return ${entityName?uncap_first}Dao.selectPage(systemSelect);
+    }
 }

@@ -33,20 +33,20 @@ import io.swagger.annotations.Api;
 @Api(description = "${entityComment}",value="${entityComment}" )
 </#if>
 @RestController
-@RequestMapping("/api/${objectName}")
+@RequestMapping("/api/${entityName?uncap_first}")
 @Slf4j
 public class ${entityName}Controller extends BaseController{
 
 	@Autowired
     private ${entityName}Service ${entityName?uncap_first}Service;
- @Autowired
+    @Autowired
     private ListUtil listUtil;
-   //保存
+    //保存
     @PostMapping(value="/save")
     public ResVal save(HttpServletRequest request, @RequestBody ${entityName} ${entityName?uncap_first})  {
         //业务操作
-    int rows=${entityName?uncap_first}Service.add(${entityName?uncap_first});
-    if (rows <= 0) {
+        int rows=${entityName?uncap_first}Service.add(${entityName?uncap_first});
+        if (rows <= 0) {
             return ResVal.error();
         }
         return ResVal.success();
@@ -56,7 +56,7 @@ public class ${entityName}Controller extends BaseController{
     @PostMapping(value = "/update")
     public ResVal update(HttpServletRequest request, @RequestBody ${entityName} ${entityName?lower_case} ) {
         //业务操作
-int rows=${entityName?uncap_first}Service.update(${entityName?uncap_first});
+        int rows=${entityName?uncap_first}Service.update(${entityName?uncap_first});
         if (rows <= 0) {
             return ResVal.error();
         }
@@ -66,7 +66,7 @@ int rows=${entityName?uncap_first}Service.update(${entityName?uncap_first});
     //根据id删除
     @GetMapping(value="/deleteById")
     public ResVal delete(HttpServletRequest request,@RequestBody SystemSelect systemSelect) {
-int rows=${entityName?uncap_first}Service.deleteById(systemSelect.getId());
+        int rows=${entityName?uncap_first}Service.deleteById(systemSelect.getId());
         if (rows <= 0) {
             return ResVal.error();
         }
@@ -76,9 +76,9 @@ int rows=${entityName?uncap_first}Service.deleteById(systemSelect.getId());
     //根据id查询
     @GetMapping(value="/getById")
     public ResVal getById(HttpServletRequest request,@RequestBody SystemSelect systemSelect)  {
-${entityName} ${entityName?uncap_first} = ${entityName?uncap_first}Service.findById(systemSelect.getId());
-ResVal resVal = new ResVal<>();
-resVal.setData(${entityName?uncap_first});
+        ${entityName} ${entityName?uncap_first} = ${entityName?uncap_first}Service.findById(systemSelect.getId());
+        ResVal resVal = new ResVal<>();
+        resVal.setData(${entityName?uncap_first});
         return resVal;
     }
 

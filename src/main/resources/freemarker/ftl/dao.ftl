@@ -19,41 +19,41 @@ import org.apache.ibatis.annotations.Param;
  * 
  */
 public interface ${entityName}Dao  {
-/**
-*列名选择性插入
-*/
-int insert(${entityName} ${entityName?uncap_first});
-/**
-*列名选择性批量插入
-*/
-int insertBatch(List<${entityName}> ${entityName?uncap_first}List);
-/**
-*列名选择性批量修改根据id
-*/
-int updateBatch(List<${entityName}> ${entityName?uncap_first}List);
-/**
-*列名选择性更新根据主键
-*/
-int updateById(${entityName} ${entityName?uncap_first});
-/**
-*根据id逻辑删除
-*/
-int deleteById(@Param("id") Long id);
-/**
-*根据id查询
-*/
-${entityName} findById(@Param("id") Long id);
-/**
-*根据实体条件查询返回最新的一条数据
-*/
-${entityName} findByEntity(${entityName} ${entityName?uncap_first});
-/**
-*分页查询，分页需要pageHelper
-*/
-List<${entityName}> selectPage(SystemSelect systemSelect);
-/**
-*分页根据实体类查询查询,分页需要pageHelper
-*/
-List<${entityName}> selectPageByEntity(${entityName} ${entityName?uncap_first});
+     /**
+     *列名选择性插入
+     */
+     int insert(${entityName} ${entityName?uncap_first});
+     /**
+     *列名选择性批量插入
+     */
+     int insertBatch(List<${entityName}> ${entityName?uncap_first}List);
+     /**
+     *列名选择性批量修改根据id
+     */
+     int updateBatch(List<${entityName}> ${entityName?uncap_first}List);
+     /**
+     *列名选择性更新根据主键
+     */
+     int updateById(${entityName} ${entityName?uncap_first});
+     /**
+     *根据id逻辑删除
+     */
+     int deleteById(@Param("id") Long id);
+     /**
+     *根据id查询
+     */
+     ${entityName} findById(@Param("id") Long id);
+     /**
+     *根据实体条件查询返回最新的一条数据
+     */
+     ${entityName} findByEntity(${entityName} ${entityName?uncap_first});
+     /**
+     *分页查询，分页需要pageHelper
+     */
+     List<${entityName}> selectPage(SystemSelect systemSelect);
+     /**
+     *分页根据实体类查询查询,分页需要pageHelper
+     */
+     List<${entityName}> selectPageByEntity(${entityName} ${entityName?uncap_first});
 }
 	

@@ -20,8 +20,8 @@ import java.util.List;
  */
 public interface ${entityName}Service  {
 	int add(${entityName} ${entityName?uncap_first});
-     int update(${entityName} ${entityName?uncap_first});
-     int deleteById(Long id);
-     ${entityName} findById( Long id);
-     List<${entityName}> selectPage(SystemSelect systemSelect);
+    int update(${entityName} ${entityName?uncap_first});
+    int deleteById(Long id);
+    ${entityName} findById( Long id);
+    List<${entityName}> selectPage(SystemSelect systemSelect);
 }

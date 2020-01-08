@@ -16,7 +16,7 @@ import java.util.Date;
  */
 public class MyGenerator {
     // 基础信息：项目名、作者、版本
-    public static final String PROJECT = "eachD octor";
+    public static final String PROJECT = "eachDoctor";
     public static final String AUTHOR = "未来的希望";
     public static final String VERSION = "V1.0";
     // 数据库连接信息：连接URL、用户名、秘密、数据库名
@@ -54,20 +54,22 @@ public class MyGenerator {
             try {
                 bi = EntityInfoUtil.getInfo(bi);
                 //开始生成文件
-                String aa1 = Generator.createEntity(FILE_URL, bi).toString();
-                String aa2 = Generator.createDao(FILE_URL, bi).toString();
-                String aa3 = Generator.createDaoImpl(FILE_URL, bi).toString();
-                String aa4 = Generator.createService(FILE_URL, bi).toString();
-                String aa5 = Generator.createServiceImpl(FILE_URL, bi).toString();
-                String aa6 = Generator.createController(FILE_URL, bi).toString();
+                String entityFileName = Generator.createEntity(FILE_URL, bi).toString();
+                String daoFileName = Generator.createDao(FILE_URL, bi).toString();
+                String mapperXmlFileName = Generator.createDaoImpl(FILE_URL, bi).toString();
+                String serviceFileName = Generator.createService(FILE_URL, bi).toString();
+                String serviceImplFileName = Generator.createServiceImpl(FILE_URL, bi).toString();
+                String controllerFileName = Generator.createController(FILE_URL, bi).toString();
                 // 是否创建swagger配置文件
-               // String aa7 = Generator.createSwaggerConfig(FILE_URL, bi).toString();
+               // String swaggerFileName = Generator.createSwaggerConfig(FILE_URL, bi).toString();
 
-                System.out.println(aa1);
-                System.out.println(aa2); System.out.println(aa3); System.out.println(aa4);
-               // System.out.println(aa5); System.out.println(aa6); System.out.println(aa7);
-
-                //System.out.println(aa7);
+                System.out.println(entityFileName);
+                System.out.println(daoFileName);
+                System.out.println(mapperXmlFileName);
+                System.out.println(serviceFileName);
+                System.out.println(serviceImplFileName);
+                 System.out.println(controllerFileName);
+                // System.out.println(swaggerFileName);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
