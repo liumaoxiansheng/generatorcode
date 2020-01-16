@@ -54,7 +54,7 @@ public class ${entityName}Controller extends BaseController{
 
     //根据id更新
     @PostMapping(value = "/update")
-    public ResVal update(HttpServletRequest request, @RequestBody ${entityName} ${entityName?lower_case} ) {
+    public ResVal update(HttpServletRequest request, @RequestBody ${entityName} ${entityName?uncap_first} ) {
         //业务操作
         int rows=${entityName?uncap_first}Service.update(${entityName?uncap_first});
         if (rows <= 0) {

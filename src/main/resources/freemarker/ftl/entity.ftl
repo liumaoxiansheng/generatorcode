@@ -31,7 +31,7 @@ import ${ps};
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class ${entityName}  {
+public class ${entityName} implements Serializable {
 
 	private static final long serialVersionUID = ${agile}L;
 	
