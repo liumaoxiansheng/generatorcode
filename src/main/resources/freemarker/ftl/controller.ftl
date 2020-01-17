@@ -30,7 +30,7 @@ import io.swagger.annotations.ApiOperation;
  * @time    ${createTime}
  *
  */
- <#if isSwagger=="true" >
+<#if isSwagger=="true" >
 @Api(description = "${entityComment}",value="${entityComment}" )
 </#if>
 @RestController
@@ -44,7 +44,9 @@ public class ${entityName}Controller extends BaseController{
     private ListUtil listUtil;
     //保存
     @PostMapping(value="/save")
+<#if isSwagger=="true" >
     @ApiOperation("保存${entityComment}")
+</#if>
     public ResVal save(HttpServletRequest request, @RequestBody ${entityName} ${entityName?uncap_first})  {
         //业务操作
         int rows=${entityName?uncap_first}Service.add(${entityName?uncap_first});
@@ -56,7 +58,9 @@ public class ${entityName}Controller extends BaseController{
 
     //根据id更新
     @PostMapping(value = "/update")
+<#if isSwagger=="true" >
     @ApiOperation("更新${entityComment}")
+</#if>
     public ResVal update(HttpServletRequest request, @RequestBody ${entityName} ${entityName?uncap_first} ) {
         //业务操作
         int rows=${entityName?uncap_first}Service.update(${entityName?uncap_first});
@@ -67,8 +71,10 @@ public class ${entityName}Controller extends BaseController{
     }
 
     //根据id删除
-    @GetMapping(value="/deleteById")
+    @PostMapping(value="/deleteById")
+<#if isSwagger=="true" >
     @ApiOperation("删除${entityComment}")
+</#if>
     public ResVal delete(HttpServletRequest request,@RequestBody SystemSelect systemSelect) {
         int rows=${entityName?uncap_first}Service.deleteById(systemSelect.getId());
         if (rows <= 0) {
@@ -78,10 +84,12 @@ public class ${entityName}Controller extends BaseController{
     }
 
     //根据id查询
-    @GetMapping(value="/getById")
+    @PostMapping(value="/getById")
+<#if isSwagger=="true" >
     @ApiOperation("查询${entityComment}")
+</#if>
     public ResVal getById(HttpServletRequest request,@RequestBody SystemSelect systemSelect)  {
-        ${entityName} ${entityName?uncap_first} = ${entityName?uncap_first}Service.findById(systemSelect.getId());
+${entityName} ${entityName?uncap_first} = ${entityName?uncap_first}Service.findById(systemSelect.getId());
         ResVal resVal = new ResVal<>();
         resVal.setData(${entityName?uncap_first});
         return resVal;
@@ -89,7 +97,9 @@ public class ${entityName}Controller extends BaseController{
 
     //分页查询
     @GetMapping(value="/selectPage")
+<#if isSwagger=="true" >
     @ApiOperation("查询${entityComment}分页列表")
+</#if>
     public ResVal selectPage(HttpServletRequest request,@RequestBody SystemSelect systemSelect) {
         ResVal resVal = new ResVal<>();
         List<${entityName}> list = ${entityName?uncap_first}Service.selectPage(systemSelect);

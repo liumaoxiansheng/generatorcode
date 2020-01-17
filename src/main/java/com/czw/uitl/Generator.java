@@ -51,7 +51,8 @@ public class Generator {
 		List<PropertyInfo> list=bi.getCis();
 		String agile="";
 		for (PropertyInfo propertyInfo : list) {
-			agile=agile+propertyInfo.getColumn()+", ";
+
+			agile=agile+"`"+propertyInfo.getColumn()+"`"+", ";
 		}
 		agile=agile.substring(0, agile.length()-2);
 		bi.setAgile(agile);

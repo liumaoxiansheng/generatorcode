@@ -19,51 +19,51 @@
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from ${table}
-        where ${idColumn} = <#noparse>#{</#noparse>${idJavaType},jdbcType=${idJdbcType?upper_case}}
+        from `${table}`
+        where `${idColumn}` = <#noparse>#{</#noparse>${idJavaType},jdbcType=${idJdbcType?upper_case}}
     </select>
     <!-- 实体条件查询返回最新的一条数据 -->
     <select id="findByEntity" parameterType="${entityUrl}.${entityName}"
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from ${table}
+        from `${table}`
         <where>
             deleted=0
 			 <#list cis as ci>
 			 <if test="${ci.property} != null">
-                 and ${ci.column} = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}}
+                 and `${ci.column}` = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}}
              </if>
              </#list>
         </where>
-        order by ${idColumn} desc
+        order by `${idColumn}` desc
         limit 1
     </select>
 
     <!-- 逻辑删除 -->
     <update id="deleteById" parameterType="java.lang.Long">
-        update ${table} set deleted = 1
-        where ${idColumn} = <#noparse>#{</#noparse>${idJavaType},jdbcType=${idJdbcType?upper_case}}
+        update `${table}` set deleted = 1
+        where `${idColumn}` = <#noparse>#{</#noparse>${idJavaType},jdbcType=${idJdbcType?upper_case}}
     </update>
     <!-- 修改-->
     <update id="updateById" parameterType="${entityUrl}.${entityName}">
-        update ${table}
+        update `${table}`
         <set>
 			<#list cis as ci>
                 <if test="${ci.property} != null">
-                    ${ci.column} = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}},
+                    `${ci.column}` = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}},
                 </if>
             </#list>
         </set>
-        where ${idColumn} = <#noparse>#{</#noparse>${idJavaType},jdbcType=${idJdbcType?upper_case}}
+        where `${idColumn}` = <#noparse>#{</#noparse>${idJavaType},jdbcType=${idJdbcType?upper_case}}
     </update>
     <!-- 批量修改-->
     <update id="updateBatch" parameterType="${entityUrl}.${entityName}">
-        update ${table}
+        update `${table}`
         <set>
 			<#list cis as ci>
                 <if test="${ci.property} != null">
-                    ${ci.column} = case ${idColumn}
+                    `${ci.column}` = case ${idColumn}
                     <foreach collection="list" item="item" index="index" separator=",">
                         WHEN <#noparse>#{</#noparse>item.${idJavaType}} THEN <#noparse>#{</#noparse>item.${ci.property}}
                     </foreach>
@@ -71,18 +71,18 @@
                 </if>
             </#list>
         </set>
-        where ${idColumn} in
+        where `${idColumn}` in
         <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
 		<#noparse>#{</#noparse>item.${idJavaType?upper_case}}
         </foreach>
     </update>
     <!-- 插入-->
     <insert id="insert" parameterType="${entityUrl}.${entityName}" useGeneratedKeys="true" keyProperty="id">
-        insert into ${table}
+        insert into `${table}`
         <trim prefix="(" suffix=")" suffixOverrides=",">
            <#list cis as ci>
                <if test="${ci.property} != null">
-                   ${ci.column},
+                   `${ci.column}`,
                </if>
            </#list>
         </trim>
@@ -96,11 +96,11 @@
     </insert>
     <!-- 批量插入-->
     <insert id="insertBatch" parameterType="java.util.List">
-        insert into ${table}
+        insert into `${table}`
         <trim prefix="(" suffix=")" suffixOverrides=",">
            <#list cis as ci>
                <if test="${ci.property} != null">
-                   ${ci.column},
+                   `${ci.column}`,
                </if>
            </#list>
         </trim>
@@ -120,7 +120,7 @@
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from ${table}
+        from `${table}`
         where deleted=0
     </select>
     <!-- 实体类条件查询 -->
@@ -128,12 +128,12 @@
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from ${table}
+        from `${table}`
         <where>
             deleted=0
 			 <#list cis as ci>
 			 <if test="${ci.property} != null">
-                 and ${ci.column} = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}}
+                 and `${ci.column}` = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}}
              </if>
              </#list>
         </where>
