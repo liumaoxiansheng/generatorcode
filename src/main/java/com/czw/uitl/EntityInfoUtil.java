@@ -63,7 +63,7 @@ public class EntityInfoUtil {
 					bi.setIdType(ci.getJavaType());
 					bi.setIdJdbcType(ci.getJdbcType());
 					bi.setIdColumn(column);
-					bi.setIdJavaType(ci.getJavaType());
+					bi.setIdJavaType(ci.getProperty());
 					ci.setIsPrimaryKey("true");
 				}
 				columns.add(ci);

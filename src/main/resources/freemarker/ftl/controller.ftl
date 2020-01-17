@@ -19,6 +19,7 @@ import org.dr.utils.ListUtil;
 import java.util.List;
 <#if isSwagger=="true" >
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 </#if>
 /**   
  * <p>自动生成工具：他强由他强，明月照大江</p>
@@ -43,6 +44,7 @@ public class ${entityName}Controller extends BaseController{
     private ListUtil listUtil;
     //保存
     @PostMapping(value="/save")
+    @ApiOperation("保存${entityComment}")
     public ResVal save(HttpServletRequest request, @RequestBody ${entityName} ${entityName?uncap_first})  {
         //业务操作
         int rows=${entityName?uncap_first}Service.add(${entityName?uncap_first});
@@ -54,6 +56,7 @@ public class ${entityName}Controller extends BaseController{
 
     //根据id更新
     @PostMapping(value = "/update")
+    @ApiOperation("更新${entityComment}")
     public ResVal update(HttpServletRequest request, @RequestBody ${entityName} ${entityName?uncap_first} ) {
         //业务操作
         int rows=${entityName?uncap_first}Service.update(${entityName?uncap_first});
@@ -65,6 +68,7 @@ public class ${entityName}Controller extends BaseController{
 
     //根据id删除
     @GetMapping(value="/deleteById")
+    @ApiOperation("删除${entityComment}")
     public ResVal delete(HttpServletRequest request,@RequestBody SystemSelect systemSelect) {
         int rows=${entityName?uncap_first}Service.deleteById(systemSelect.getId());
         if (rows <= 0) {
@@ -75,6 +79,7 @@ public class ${entityName}Controller extends BaseController{
 
     //根据id查询
     @GetMapping(value="/getById")
+    @ApiOperation("查询${entityComment}")
     public ResVal getById(HttpServletRequest request,@RequestBody SystemSelect systemSelect)  {
         ${entityName} ${entityName?uncap_first} = ${entityName?uncap_first}Service.findById(systemSelect.getId());
         ResVal resVal = new ResVal<>();
@@ -84,6 +89,7 @@ public class ${entityName}Controller extends BaseController{
 
     //分页查询
     @GetMapping(value="/selectPage")
+    @ApiOperation("查询${entityComment}分页列表")
     public ResVal selectPage(HttpServletRequest request,@RequestBody SystemSelect systemSelect) {
         ResVal resVal = new ResVal<>();
         List<${entityName}> list = ${entityName?uncap_first}Service.selectPage(systemSelect);

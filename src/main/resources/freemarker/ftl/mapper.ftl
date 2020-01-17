@@ -2,14 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="${daoUrl}.${entityName}Dao">
 
-	<resultMap id="BaseResultMap" type="${entityUrl}.${entityName}">
+    <resultMap id="BaseResultMap" type="${entityUrl}.${entityName}">
 	<#list cis as ci>
-		<id column="${ci.column}" property="${ci.property}" />
-	</#list>
-	</resultMap>
-	<sql id="Base_Column_List">
-		${agile}
-	</sql>
+        <#if ci.isPrimaryKey=='true'>
+            <id column="${ci.column}" property="${ci.property}"/>
+        <#else >
+        <result column="${ci.column}" property="${ci.property}"/>
+        </#if>
+    </#list>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ${agile}
+    </sql>
     <!-- 查询根据主键 -->
     <select id="findById" parameterType="java.lang.Long"
             resultMap="BaseResultMap">
@@ -30,44 +34,44 @@
 			 <if test="${ci.property} != null">
                  and ${ci.column} = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}}
              </if>
-			 </#list>
+             </#list>
         </where>
-		order by ${idColumn} desc
-		limit 1
+        order by ${idColumn} desc
+        limit 1
     </select>
 
     <!-- 逻辑删除 -->
     <update id="deleteById" parameterType="java.lang.Long">
         update ${table} set deleted = 1
-		where ${idColumn} = <#noparse>#{</#noparse>${idJavaType},jdbcType=${idJdbcType?upper_case}}
+        where ${idColumn} = <#noparse>#{</#noparse>${idJavaType},jdbcType=${idJdbcType?upper_case}}
     </update>
     <!-- 修改-->
     <update id="updateById" parameterType="${entityUrl}.${entityName}">
         update ${table}
         <set>
 			<#list cis as ci>
-			 <if test="${ci.property} != null">
-				 ${ci.column} = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}},
-             </if>
-			</#list>
+                <if test="${ci.property} != null">
+                    ${ci.column} = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}},
+                </if>
+            </#list>
         </set>
-		where ${idColumn} = <#noparse>#{</#noparse>${idJavaType},jdbcType=${idJdbcType?upper_case}}
+        where ${idColumn} = <#noparse>#{</#noparse>${idJavaType},jdbcType=${idJdbcType?upper_case}}
     </update>
     <!-- 批量修改-->
     <update id="updateBatch" parameterType="${entityUrl}.${entityName}">
         update ${table}
         <set>
 			<#list cis as ci>
-			 <if test="${ci.property} != null">
-				 ${ci.column} = case ${idColumn}
-				 <foreach collection="list" item="item" index="index" separator=",">
-                     WHEN <#noparse>#{</#noparse>item.${idJavaType}} THEN <#noparse>#{</#noparse>item.${ci.property}}
-				 </foreach>
-				 end,
-             </if>
-			</#list>
+                <if test="${ci.property} != null">
+                    ${ci.column} = case ${idColumn}
+                    <foreach collection="list" item="item" index="index" separator=",">
+                        WHEN <#noparse>#{</#noparse>item.${idJavaType}} THEN <#noparse>#{</#noparse>item.${ci.property}}
+                    </foreach>
+                    end,
+                </if>
+            </#list>
         </set>
-		where ${idColumn} in
+        where ${idColumn} in
         <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
 		<#noparse>#{</#noparse>item.${idJavaType?upper_case}}
         </foreach>
@@ -77,17 +81,17 @@
         insert into ${table}
         <trim prefix="(" suffix=")" suffixOverrides=",">
            <#list cis as ci>
-			 <if test="${ci.property} != null">
-				 ${ci.column},
-             </if>
-		   </#list>
+               <if test="${ci.property} != null">
+                   ${ci.column},
+               </if>
+           </#list>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <#list cis as ci>
-			 <if test="${ci.property} != null">
+                <if test="${ci.property} != null">
 				 <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}},
-             </if>
-			</#list>
+                </if>
+            </#list>
         </trim>
     </insert>
     <!-- 批量插入-->
@@ -95,19 +99,19 @@
         insert into ${table}
         <trim prefix="(" suffix=")" suffixOverrides=",">
            <#list cis as ci>
-			 <if test="${ci.property} != null">
-				 ${ci.column},
-             </if>
-		   </#list>
+               <if test="${ci.property} != null">
+                   ${ci.column},
+               </if>
+           </#list>
         </trim>
         <foreach collection="list" item="item" index="index" separator=",">
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
             <#list cis as ci>
-			 <if test="${ci.property} != null">
+                <if test="${ci.property} != null">
 				 <#noparse>#{</#noparse>item.${ci.property},jdbcType=${ci.jdbcType?upper_case}},
-             </if>
-			</#list>
-        </trim>
+                </if>
+            </#list>
+            </trim>
         </foreach>
     </insert>
 
@@ -125,14 +129,14 @@
         select
         <include refid="Base_Column_List"/>
         from ${table}
-		<where>
+        <where>
             deleted=0
 			 <#list cis as ci>
 			 <if test="${ci.property} != null">
-				and ${ci.column} = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}}
+                 and ${ci.column} = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}}
              </if>
-			 </#list>
-		</where>
+             </#list>
+        </where>
 
 
     </select>
