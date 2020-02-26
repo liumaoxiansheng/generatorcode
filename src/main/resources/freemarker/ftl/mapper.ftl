@@ -60,20 +60,23 @@
     <!-- 批量修改-->
     <update id="updateBatch" parameterType="${entityUrl}.${entityName}">
         update `${table}`
-        <set>
-			<#list cis as ci>
-                <if test="${ci.property} != null">
-                    `${ci.column}` = case ${idColumn}
-                    <foreach collection="list" item="item" index="index" separator=",">
+        <trim prefix="set" suffixOverrides=",">
+            <#list cis as ci>
+            <trim prefix="`${ci.column}` = case  ${idColumn} " suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.${ci.property} !=null">
                         WHEN <#noparse>#{</#noparse>item.${idJavaType}} THEN <#noparse>#{</#noparse>item.${ci.property}}
-                    </foreach>
-                    end,
-                </if>
+                    </if>
+                    <if test="item.${ci.property} == null">
+                        WHEN <#noparse>#{</#noparse>item.${idJavaType}} THEN `${table}`.`${ci.column}` <!--原数据-->
+                    </if>
+                </foreach>
+            </trim>
             </#list>
-        </set>
+        </trim>
         where `${idColumn}` in
         <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
-		<#noparse>#{</#noparse>item.${idJavaType?upper_case}}
+		<#noparse>#{</#noparse>item.${idJavaType}}
         </foreach>
     </update>
     <!-- 插入-->
@@ -95,7 +98,7 @@
         </trim>
     </insert>
     <!-- 批量插入-->
-    <insert id="insertBatch" parameterType="java.util.List">
+    <insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
         insert into `${table}`
         <trim prefix="(" suffix=")" suffixOverrides=",">
            <#list cis as ci>
