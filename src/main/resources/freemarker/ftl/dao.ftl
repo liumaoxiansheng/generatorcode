@@ -39,6 +39,12 @@ public interface ${entityName}Dao  {
      *根据id逻辑删除
      */
      int deleteById(@Param("id") Long id);
+
+
+ /**
+     *根据id逻辑删除
+     */
+     int deleteByIdList( List<Long> idList);
      /**
      *根据id查询
      */
@@ -46,7 +52,7 @@ public interface ${entityName}Dao  {
      /**
      *根据实体条件查询返回最新的一条数据
      */
-     ${entityName} findByEntity(${entityName} ${entityName?uncap_first});
+     ${entityName} findOneByEntity(${entityName} ${entityName?uncap_first});
      /**
      *分页查询，分页需要pageHelper
      */

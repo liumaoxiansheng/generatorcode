@@ -23,7 +23,7 @@
         where `${idColumn}` = <#noparse>#{</#noparse>${idJavaType},jdbcType=${idJdbcType?upper_case}}
     </select>
     <!-- 实体条件查询返回最新的一条数据 -->
-    <select id="findByEntity" parameterType="${entityUrl}.${entityName}"
+    <select id="findOneByEntity" parameterType="${entityUrl}.${entityName}"
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -44,6 +44,17 @@
     <update id="deleteById" parameterType="java.lang.Long">
         update `${table}` set deleted = 1
         where `${idColumn}` = <#noparse>#{</#noparse>${idJavaType},jdbcType=${idJdbcType?upper_case}}
+    </update>
+
+
+    <!--批量逻辑删除 -->
+    <update id="deleteByIdList" parameterType="${entityUrl}.${entityName}">
+        update `${table}` set deleted = 1
+        where
+        `${idColumn}` in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+		<#noparse>#{</#noparse>item}
+        </foreach>
     </update>
     <!-- 修改-->
     <update id="updateById" parameterType="${entityUrl}.${entityName}">
