@@ -113,20 +113,27 @@
         insert into `${table}`
         <trim prefix="(" suffix=")" suffixOverrides=",">
            <#list cis as ci>
-               <if test="${ci.property} != null">
+
                    `${ci.column}`,
-               </if>
            </#list>
         </trim>
+        values
+        <trim suffixOverrides=",">
         <foreach collection="list" item="item" index="index" separator=",">
-            <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
             <#list cis as ci>
-                <if test="${ci.property} != null">
-				 <#noparse>#{</#noparse>item.${ci.property},jdbcType=${ci.jdbcType?upper_case}},
-                </if>
+                <choose>
+                    <when test="<#noparse>#{</#noparse>item.${ci.property} !=null">
+                       <#noparse>#{</#noparse>item.${ci.property},jdbcType=${ci.jdbcType?upper_case}},
+                    </when>
+                    <otherwise>
+                        null,
+                    </otherwise>
+                </choose>
             </#list>
             </trim>
         </foreach>
+        </trim>
     </insert>
 
     <!-- 分页查询 -->
