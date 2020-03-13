@@ -15,7 +15,7 @@
     ${agile}
     </sql>
     <!-- 查询根据主键 -->
-    <select id="findById" parameterType="java.lang.Long"
+    <select id="selectById" parameterType="java.lang.Long"
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -23,7 +23,7 @@
         where `${idColumn}` = <#noparse>#{</#noparse>${idJavaType},jdbcType=${idJdbcType?upper_case}}
     </select>
     <!-- 实体条件查询返回最新的一条数据 -->
-    <select id="findOneByEntity" parameterType="${entityUrl}.${entityName}"
+    <select id="selectOneByEntity" parameterType="${entityUrl}.${entityName}"
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -158,8 +158,6 @@
              </if>
              </#list>
         </where>
-
-
     </select>
 
 </mapper>

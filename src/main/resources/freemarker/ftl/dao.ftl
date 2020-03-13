@@ -48,11 +48,11 @@ public interface ${entityName}Dao  {
      /**
      *根据id查询
      */
-     ${entityName} findById(@Param("id") Long id);
+     ${entityName} selectById(@Param("id") Long id);
      /**
      *根据实体条件查询返回最新的一条数据
      */
-     ${entityName} findOneByEntity(${entityName} ${entityName?uncap_first});
+     ${entityName} selectOneByEntity(${entityName} ${entityName?uncap_first});
      /**
      *分页查询，分页需要pageHelper
      */
