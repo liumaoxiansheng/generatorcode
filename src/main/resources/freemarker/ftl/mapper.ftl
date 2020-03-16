@@ -109,7 +109,7 @@
         </trim>
     </insert>
     <!-- 批量插入-->
-    <insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertBatch" parameterType="java.util.List">
         insert into `${table}`
         <trim prefix="(" suffix=")" suffixOverrides=",">
            <#list cis as ci>
