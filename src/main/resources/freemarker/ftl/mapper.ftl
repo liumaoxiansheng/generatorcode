@@ -123,11 +123,11 @@
             <trim prefix="(" suffix=")" suffixOverrides=",">
             <#list cis as ci>
                 <choose>
-                    <when test="<#noparse>#{</#noparse>item.${ci.property} !=null">
+                    <when test="item.${ci.property} !=null">
                        <#noparse>#{</#noparse>item.${ci.property},jdbcType=${ci.jdbcType?upper_case}},
                     </when>
                     <otherwise>
-                        null,
+                        DEFAULT,
                     </otherwise>
                 </choose>
             </#list>
