@@ -56,6 +56,18 @@
 		<#noparse>#{</#noparse>item}
         </foreach>
     </update>
+
+    <!--条件逻辑删除 -->
+    <update id="deleteByEntity" parameterType="${entityUrl}.${entityName}">
+        update `${table}` set deleted = 1
+        <where>
+			 <#list cis as ci>
+			 <if test="${ci.property} != null">
+                 and `${ci.column}` = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}}
+             </if>
+             </#list>
+        </where>
+    </update>
     <!-- 修改-->
     <update id="updateById" parameterType="${entityUrl}.${entityName}">
         update `${table}`

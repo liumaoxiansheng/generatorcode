@@ -41,7 +41,13 @@ public interface ${entityName}Dao  {
      int deleteById(@Param("id") Long id);
 
 
- /**
+     /**
+     *条件逻辑删除
+     */
+     int deleteByEntity(${entityName} ${entityName?uncap_first});
+
+
+    /**
      *根据id逻辑删除
      */
      int deleteByIdList( List<Long> idList);
