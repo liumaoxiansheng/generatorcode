@@ -60,10 +60,18 @@ public class EntityInfoUtil {
 				//设置注解类型
 			//	if (column.equalsIgnoreCase("id")) {
 				if (columnKey!=null&&columnKey.trim()!=""&&columnKey.equalsIgnoreCase("PRI")) { //主键
-					bi.setIdType(ci.getJavaType());
-					bi.setIdJdbcType(ci.getJdbcType());
-					bi.setIdColumn(column);
-					bi.setIdJavaType(ci.getProperty());
+					if (bi.getIdType()==null) {
+						bi.setIdType(ci.getJavaType());
+					}
+					if (bi.getIdJdbcType()==null) {
+						bi.setIdJdbcType(ci.getJdbcType());
+					}
+					if (bi.getIdColumn()==null) {
+						bi.setIdColumn(column);
+					}
+					if (bi.getIdJavaType()==null) {
+						bi.setIdJavaType(ci.getProperty());
+					}
 					ci.setIsPrimaryKey("true");
 				}
 				columns.add(ci);

@@ -1,14 +1,7 @@
-/**
- * @filename:${entityName}Service ${createTime}
- * @project ${project}  ${version}
- * Copyright(c) ${createTime} ${author} Co. Ltd.
- * All right reserved. 
- */
 package ${serviceUrl};
 
-import ${entityUrl}.${entityName};
-import org.dr.das.model.operator.SystemSelect;
-import java.util.List;
+import ${entityUrl}.${entityName}Model;
+import com.jx.smart.tools.model.PagingModel;
 
 /**   
  * <p>自动生成工具：他强由他强，明月照大江</p>
@@ -19,9 +12,35 @@ import java.util.List;
  * 
  */
 public interface ${entityName}Service  {
-	int add(${entityName} ${entityName?uncap_first});
-    int update(${entityName} ${entityName?uncap_first});
-    int deleteById(Long id);
-    ${entityName} findById( Long id);
-    List<${entityName}> selectPage(SystemSelect systemSelect);
+    /**
+    *列名选择性插入
+    * @param ${entityName?uncap_first} 数据模型
+    * @return 结果行数
+    */
+	int add(${entityName}Model ${entityName?uncap_first});
+
+    /**
+    *列名选择性更新根据主键
+    * @param ${entityName?uncap_first} 数据模型
+    * @return 结果行数
+    */
+    int update(${entityName}Model ${entityName?uncap_first});
+
+    /**
+    *根据id查询
+    * @param id 主键
+    * @param orgId 项目id
+    * @return 返回实体数据
+    */
+    ${entityName}Model findById( ${idType} id);
+
+    /**
+    *分页查询
+    * @param keyword 搜索关键字
+    * @param orgId 项目id
+    * @param pageNum 页码
+    * @param pageSize 每页大小
+    * @return 返回实体列表数据
+    */
+    PagingModel<?> listPage(Long orgId, String keyword, Integer pageNum, Integer pageSize);
 }

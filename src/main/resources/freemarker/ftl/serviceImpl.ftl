@@ -1,19 +1,13 @@
-/**
- * @filename:${entityName}ServiceImpl ${createTime}
- * @project ${project}  ${version}
- * Copyright(c) ${createTime} ${author} Co. Ltd.
- * All right reserved. 
- */
 package ${serviceImplUrl};
 
-import ${entityUrl}.${entityName};
-import ${daoUrl}.${entityName}Dao;
+import ${entityUrl}.${entityName}Model;
+import ${daoUrl}.${entityName}Mapper;
 import ${serviceUrl}.${entityName}Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.dr.das.model.operator.SystemSelect;
-import java.util.List;
 import com.github.pagehelper.PageHelper;
+import com.jx.ops.tools.model.PagingModel;
+import java.util.List;
 /**   
  * <p>自动生成工具：他强由他强，明月照大江</p>
  * 
@@ -25,26 +19,27 @@ import com.github.pagehelper.PageHelper;
 @Service
 public class ${entityName}ServiceImpl  implements ${entityName}Service  {
     @Autowired
-    private ${entityName}Dao ${entityName?uncap_first}Dao;
+    private ${entityName}Mapper mapper;
+
     @Override
-	public int add(${entityName} ${entityName?uncap_first}){
-        return ${entityName?uncap_first}Dao.insert(${entityName?uncap_first});
+	public int add(${entityName}Model ${entityName?uncap_first}){
+        return mapper.insert(${entityName?uncap_first});
     }
+
     @Override
-    public int update(${entityName} ${entityName?uncap_first}){
-        return ${entityName?uncap_first}Dao.updateById(${entityName?uncap_first});
+    public int update(${entityName}Model ${entityName?uncap_first}){
+        return mapper.updateById(${entityName?uncap_first});
     }
+
     @Override
-    public int deleteById(Long id){
-        return ${entityName?uncap_first}Dao.deleteById(id);
+    public ${entityName}Model findById(${idType} id){
+        return mapper.selectById(id);
     }
+
     @Override
-    public ${entityName} findById(Long id){
-        return ${entityName?uncap_first}Dao.findById(id);
-    }
-    @Override
-    public  List<${entityName}> selectPage(SystemSelect systemSelect){
-        PageHelper.startPage(systemSelect.getPageNum(), systemSelect.getPageSize());
-        return ${entityName?uncap_first}Dao.selectPage(systemSelect);
+    public PagingModel<?> listPage(Long orgId, String keyword, Integer pageNum, Integer pageSize) {
+    PageHelper.startPage(pageNum,pageSize);
+    List<${entityName}Model> list= mapper.listPage(orgId,keyword);
+    return new PagingModel<>(list);
     }
 }

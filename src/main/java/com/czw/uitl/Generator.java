@@ -92,9 +92,9 @@ public class Generator {
 	//生成文件路径和名字
 	public static String getGeneratorFileUrl(String url,String packageUrl,String entityName, String type){
 		if (type.equals("entity")) {
-			return url+pageToUrl(packageUrl)+entityName+".java";
+			return url+pageToUrl(packageUrl)+entityName+"Model.java";
 		}else if(type.equals("dao")) {
-			return url+pageToUrl(packageUrl)+entityName+"Dao.java";
+			return url+pageToUrl(packageUrl)+entityName+"Mapper.java";
 		}else if(type.equals("daoImpl")) {
 			return url+pageToUrl(packageUrl)+entityName+"Mapper.xml";
 		}else if(type.equals("service")) {

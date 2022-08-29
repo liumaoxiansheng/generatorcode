@@ -1,21 +1,13 @@
-/**
- * @filename:${entityName}Controller ${createTime}
- * @project ${project}  ${version}
- * Copyright(c) ${createTime} ${author} Co. Ltd.
- * All right reserved. 
- */
 package ${controllerUrl};
-import lombok.extern.slf4j.Slf4j;
-import ${entityUrl}.${entityName};
+import ${entityUrl}.${entityName}Model;
 import ${serviceUrl}.${entityName}Service;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.dr.das.model.operator.SystemSelect;
-import org.dr.utils.ResVal;
-import org.dr.utils.ListUtil;
+import com.jx.ops.tools.model.ResultModel;
+import com.jx.ops.tools.util.ResultUtil;
 import java.util.List;
 <#if isSwagger=="true" >
 import io.swagger.annotations.Api;
@@ -34,77 +26,46 @@ import io.swagger.annotations.ApiOperation;
 @Api(description = "${entityComment}",value="${entityComment}" )
 </#if>
 @RestController
-@RequestMapping("/api/${entityName?uncap_first}")
-@Slf4j
-public class ${entityName}Controller extends BaseController{
+@RequestMapping("/${entityName?uncap_first}")
+public class ${entityName}Controller{
 
 	@Autowired
     private ${entityName}Service ${entityName?uncap_first}Service;
-    @Autowired
-    private ListUtil listUtil;
-    //保存
-    @PostMapping(value="/save")
+
+
+    @PostMapping("/saveOrEdit")
 <#if isSwagger=="true" >
-    @ApiOperation("保存${entityComment}")
+    @ApiOperation("保存或更新${entityComment}")
 </#if>
-    public ResVal save(HttpServletRequest request, @RequestBody ${entityName} ${entityName?uncap_first})  {
-        //业务操作
-        int rows=${entityName?uncap_first}Service.add(${entityName?uncap_first});
-        if (rows <= 0) {
-            return ResVal.error();
-        }
-        return ResVal.success();
+    public ResultModel<?> saveOrEdit(@RequestBody ${entityName}Model ${entityName?uncap_first}) {
+    return ${entityName?uncap_first}Service.saveOrEdit(${entityName?uncap_first});
     }
 
-    //根据id更新
-    @PostMapping(value = "/update")
-<#if isSwagger=="true" >
-    @ApiOperation("更新${entityComment}")
-</#if>
-    public ResVal update(HttpServletRequest request, @RequestBody ${entityName} ${entityName?uncap_first} ) {
-        //业务操作
-        int rows=${entityName?uncap_first}Service.update(${entityName?uncap_first});
-        if (rows <= 0) {
-            return ResVal.error();
-        }
-        return ResVal.success();
-    }
-
-    //根据id删除
-    @PostMapping(value="/deleteById")
+    @GetMapping(value="/delete/{id}")
 <#if isSwagger=="true" >
     @ApiOperation("删除${entityComment}")
 </#if>
-    public ResVal delete(HttpServletRequest request,@RequestBody SystemSelect systemSelect) {
-        int rows=${entityName?uncap_first}Service.deleteById(systemSelect.getId());
-        if (rows <= 0) {
-            return ResVal.error();
-        }
-        return ResVal.success();
+    public ResultModel<?> delete(@PathVariable Long id) {
+
+        return null;
     }
 
-    //根据id查询
-    @PostMapping(value="/getById")
+    @GetMapping("/get/{id}")
 <#if isSwagger=="true" >
     @ApiOperation("查询${entityComment}")
 </#if>
-    public ResVal getById(HttpServletRequest request,@RequestBody SystemSelect systemSelect)  {
-${entityName} ${entityName?uncap_first} = ${entityName?uncap_first}Service.findById(systemSelect.getId());
-        ResVal resVal = new ResVal<>();
-        resVal.setData(${entityName?uncap_first});
-        return resVal;
+    public ResultModel<?> getById(@PathVariable Long id) {
+    return ResultUtil.success("成功",${entityName?uncap_first}Service.findById(id));
     }
 
-    //分页查询
-    @GetMapping(value="/selectPage")
+    @GetMapping("/listPage/{orgId}")
 <#if isSwagger=="true" >
     @ApiOperation("查询${entityComment}分页列表")
 </#if>
-    public ResVal selectPage(HttpServletRequest request,@RequestBody SystemSelect systemSelect) {
-        ResVal resVal = new ResVal<>();
-        List<${entityName}> list = ${entityName?uncap_first}Service.selectPage(systemSelect);
-        resVal.setArray(list);
-        return listUtil.setDateAndArray(resVal);
+    public ResultModel<?> listPage(@PathVariable Long orgId,@RequestParam(value = "keyword", required = false) String keyword,
+    @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
+    @RequestParam(value = "pageSize", required = false, defaultValue = "30") Integer pageSize) {
+    return ${entityName?uncap_first}Service.listPage(orgId,keyword, pageNum, pageSize);
     }
 	
 }

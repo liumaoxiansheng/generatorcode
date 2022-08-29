@@ -22,7 +22,7 @@ public class MySqlTypeConvert  implements ITypeConvert {
         } else if (t.contains("bigint")) {
             return DbColumnType.LONG;
         } else if (t.contains("tinyint")) {
-            return DbColumnType.BYTE;
+            return DbColumnType.INTEGER;
         } else if (t.contains("smallint")) {
             return DbColumnType.SHORT;
         } else if (t.contains("int")) {
@@ -51,34 +51,36 @@ public class MySqlTypeConvert  implements ITypeConvert {
             return DbColumnType.DOUBLE;
         } else if (t.contains("json") || t.contains("enum")) {
             return DbColumnType.STRING;
-        } else if (t.contains("date") || t.contains("time") || t.contains("year")) {
-            switch (dateType) {
-                case ONLY_DATE:
-                    return DbColumnType.DATE;
-                case SQL_PACK:
-                    switch (t) {
-                        case "date":
-                            return DbColumnType.DATE_SQL;
-                        case "time":
-                            return DbColumnType.TIME;
-                        case "year":
-                            return DbColumnType.DATE_SQL;
-                        default:
-                            return DbColumnType.TIMESTAMP;
-                    }
-                case TIME_PACK:
-                    switch (t) {
-                        case "date":
-                            return DbColumnType.LOCAL_DATE;
-                        case "time":
-                            return DbColumnType.LOCAL_TIME;
-                        case "year":
-                            return DbColumnType.YEAR;
-                        default:
-                            return DbColumnType.LOCAL_DATE_TIME;
-                    }
-            }
         }
+        // jx date is string
+//        else if (t.contains("date") || t.contains("time") || t.contains("year")) {
+//            switch (dateType) {
+//                case ONLY_DATE:
+//                    return DbColumnType.DATE;
+//                case SQL_PACK:
+//                    switch (t) {
+//                        case "date":
+//                            return DbColumnType.DATE_SQL;
+//                        case "time":
+//                            return DbColumnType.TIME;
+//                        case "year":
+//                            return DbColumnType.DATE_SQL;
+//                        default:
+//                            return DbColumnType.TIMESTAMP;
+//                    }
+//                case TIME_PACK:
+//                    switch (t) {
+//                        case "date":
+//                            return DbColumnType.LOCAL_DATE;
+//                        case "time":
+//                            return DbColumnType.LOCAL_TIME;
+//                        case "year":
+//                            return DbColumnType.YEAR;
+//                        default:
+//                            return DbColumnType.LOCAL_DATE_TIME;
+//                    }
+//            }
+//        }
         return DbColumnType.STRING;
     }
 }

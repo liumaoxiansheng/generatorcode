@@ -73,9 +73,9 @@ public class FreemarkerUtil {
 	
 	public static String messageStr(String name) {
 		if (name.equals("entity.ftl")) {
-			name=".java";
+			name="Model.java";
 		} else if(name.equals("dao.ftl")){
-			name="Dao.java";
+			name="Mapper.java";
 		} else if(name.equals("mapper.ftl")){
 			name="Mapper.xml";
 		} else if(name.equals("service.ftl")){

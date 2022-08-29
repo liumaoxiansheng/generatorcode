@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="${daoUrl}.${entityName}Dao">
+<mapper namespace="${daoUrl}.${entityName}Mapper">
 
-    <resultMap id="BaseResultMap" type="${entityUrl}.${entityName}">
+    <resultMap id="BaseResultMap" type="${entityUrl}.${entityName}Model">
 	<#list cis as ci>
         <#if ci.isPrimaryKey=='true'>
             <id column="${ci.column}" property="${ci.property}"/>
@@ -15,111 +15,56 @@
     ${agile}
     </sql>
     <!-- 查询根据主键 -->
-    <select id="selectById" parameterType="java.lang.Long"
+    <select id="selectById"
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from `${table}`
-        where `${idColumn}` = <#noparse>#{</#noparse>${idJavaType},jdbcType=${idJdbcType?upper_case}}
+        where `${idColumn}` = <#noparse>#{</#noparse>${idJavaType}}
     </select>
-    <!-- 实体条件查询返回最新的一条数据 -->
-    <select id="selectOneByEntity" parameterType="${entityUrl}.${entityName}"
-            resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from `${table}`
-        <where>
-            deleted=0
-			 <#list cis as ci>
-			 <if test="${ci.property} != null">
-                 and `${ci.column}` = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}}
-             </if>
-             </#list>
-        </where>
-        order by `${idColumn}` desc
-        limit 1
-    </select>
+
 
     <!-- 逻辑删除 -->
-    <update id="deleteById" parameterType="java.lang.Long">
-        update `${table}` set deleted = 1
-        where `${idColumn}` = <#noparse>#{</#noparse>${idJavaType},jdbcType=${idJdbcType?upper_case}}
-    </update>
+    <delete id="deleteById" >
+        delete from  `${table}`
+        where `${idColumn}` = <#noparse>#{</#noparse>${idJavaType}}
+    </delete>
 
 
-    <!--批量逻辑删除 -->
-    <update id="deleteByIdList" parameterType="${entityUrl}.${entityName}">
-        update `${table}` set deleted = 1
-        where
-        `${idColumn}` in
-        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
-		<#noparse>#{</#noparse>item}
-        </foreach>
-    </update>
-
-    <!--条件逻辑删除 -->
-    <update id="deleteByEntity" parameterType="${entityUrl}.${entityName}">
-        update `${table}` set deleted = 1
-        <where>
-			 <#list cis as ci>
-			 <if test="${ci.property} != null">
-                 and `${ci.column}` = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}}
-             </if>
-             </#list>
-        </where>
-    </update>
     <!-- 修改-->
-    <update id="updateById" parameterType="${entityUrl}.${entityName}">
+    <update id="updateById" parameterType="${entityUrl}.${entityName}Model">
         update `${table}`
         <set>
 			<#list cis as ci>
-                <if test="${ci.property} != null">
-                    `${ci.column}` = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}},
-                </if>
+                <#if ci.isPrimaryKey == 'false'>
+            <if test="${ci.property} != null <#if ci.javaType=='String'> and ${ci.property} != '' </#if>">
+               `${ci.column}` = <#noparse>#{</#noparse>${ci.property}},
+            </if>
+                </#if>
             </#list>
         </set>
-        where `${idColumn}` = <#noparse>#{</#noparse>${idJavaType},jdbcType=${idJdbcType?upper_case}}
+        where `${idColumn}` = <#noparse>#{</#noparse>${idJavaType}}
     </update>
-    <!-- 批量修改-->
-    <update id="updateBatch" parameterType="${entityUrl}.${entityName}">
-        update `${table}`
-        <trim prefix="set" suffixOverrides=",">
-            <#list cis as ci>
-            <trim prefix="`${ci.column}` = case  ${idColumn} " suffix="end,">
-                <foreach collection="list" item="item" index="index">
-                    <if test="item.${ci.property} !=null">
-                        WHEN <#noparse>#{</#noparse>item.${idJavaType}} THEN <#noparse>#{</#noparse>item.${ci.property}}
-                    </if>
-                    <if test="item.${ci.property} == null">
-                        WHEN <#noparse>#{</#noparse>item.${idJavaType}} THEN `${table}`.`${ci.column}` <!--原数据-->
-                    </if>
-                </foreach>
-            </trim>
-            </#list>
-        </trim>
-        where `${idColumn}` in
-        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
-		<#noparse>#{</#noparse>item.${idJavaType}}
-        </foreach>
-    </update>
+
     <!-- 插入-->
-    <insert id="insert" parameterType="${entityUrl}.${entityName}" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="${entityUrl}.${entityName}Model" useGeneratedKeys="true" keyProperty="${idJavaType}">
         insert into `${table}`
         <trim prefix="(" suffix=")" suffixOverrides=",">
            <#list cis as ci>
-               <if test="${ci.property} != null">
+               <if test="${ci.property} != null <#if ci.javaType=='String'> and ${ci.property} != '' </#if>">
                    `${ci.column}`,
                </if>
            </#list>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <#list cis as ci>
-                <if test="${ci.property} != null">
-				 <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}},
+                <if test="${ci.property} != null <#if ci.javaType=='String'> and ${ci.property} != '' </#if>">
+				 <#noparse>#{</#noparse>${ci.property}},
                 </if>
             </#list>
         </trim>
     </insert>
+
     <!-- 批量插入-->
     <insert id="insertBatch" parameterType="java.util.List">
         insert into `${table}`
@@ -136,7 +81,7 @@
             <#list cis as ci>
                 <choose>
                     <when test="item.${ci.property} !=null">
-                       <#noparse>#{</#noparse>item.${ci.property},jdbcType=${ci.jdbcType?upper_case}},
+                       <#noparse>#{</#noparse>item.${ci.property}},
                     </when>
                     <otherwise>
                         DEFAULT,
@@ -149,27 +94,35 @@
     </insert>
 
     <!-- 分页查询 -->
-    <select id="selectPage" parameterType="org.dr.das.model.operator.SystemSelect"
-            resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from `${table}`
-        where deleted=0
-    </select>
-    <!-- 实体类条件查询 -->
-    <select id="selectPageByEntity" parameterType="${entityUrl}.${entityName}"
+    <select id="listPage"
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from `${table}`
         <where>
-            deleted=0
-			 <#list cis as ci>
-			 <if test="${ci.property} != null">
-                 and `${ci.column}` = <#noparse>#{</#noparse>${ci.property},jdbcType=${ci.jdbcType?upper_case}}
-             </if>
-             </#list>
+            <if test="keyword !=null">
+                and `column_name` like concat('%',<#noparse>#{</#noparse>keyword},'%')
+            </if>
         </where>
     </select>
+    <!-- 实体条件查询返回最新的一条数据 -->
+    <select id="selectOneByEntity" parameterType="${entityUrl}.${entityName}Model"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `${table}`
+        <where>
+            <#list cis as ci>
+                <if test="${ci.property} != null <#if ci.javaType=='String'> and ${ci.property} != '' </#if>">
+                    and `${ci.column}` = <#noparse>#{</#noparse>${ci.property}}
+                </if>
+            </#list>
+        </where>
+        order by `${idColumn}` desc
+        limit 1
+    </select>
+
+    <insert id="initTable">
+    </insert>
 
 </mapper>

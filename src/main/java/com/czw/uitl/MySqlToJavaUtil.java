@@ -3,6 +3,8 @@ package com.czw.uitl;
 import com.czw.convert.DateType;
 import com.czw.convert.MySqlTypeConvert;
 
+import java.util.Arrays;
+
 /**
  * Copyright: Copyright (c) 2019 
  * 
@@ -37,7 +39,11 @@ public class MySqlToJavaUtil {
      * @return String
      */
 	public static String changeToJavaFiled(String field) {
+		if (field.contains("_$")) {
+			field=field.substring(0,field.indexOf("_$"));
+		}
 		String[] fields = field.split("_");
+
 		StringBuilder sbuilder = new StringBuilder(fields[0]);
 		for (int i = 1; i < fields.length; i++) {
 			char[] cs = fields[i].toCharArray();
